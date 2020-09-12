@@ -40,7 +40,7 @@ FLEXDLL_SUBMODULE_PRESENT =
 endif
 
 # Use boot/ocamlc.opt if available
-CAMLRUN ?= ocamlrun
+CAMLRUN ?= $(ROOTDIR)/boot/ocamlrun
 ifeq (0,$(shell \
   test $(ROOTDIR)/boot/ocamlc.opt -nt $(ROOTDIR)/boot/ocamlc; \
   echo $$?))
@@ -69,9 +69,6 @@ endif
 OPTCOMPFLAGS=
 ifeq "$(FUNCTION_SECTIONS)" "true"
 OPTCOMPFLAGS += -function-sections
-endif
-ifeq "$(FLAMBDA)" "true"
-OPTCOMPFLAGS += -O3
 endif
 # By default, request ocamllex to be quiet
 OCAMLLEX_FLAGS ?= -q
