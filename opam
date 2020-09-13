@@ -5,7 +5,6 @@ synopsis: "OCaml to RISC-V Cross Compiler."
 maintainer: "Sai Venkata Krishnan <saiganesha5.svkv@gmail.com>"
 authors: "KC Sivaramakrishnan <kc@kcsrk.info>"
 license: "LGPL v2.1"
-homepage: "https://github.com/kayceesrk/riscv-ocaml/tree/4.09+cross"
 substs: [ "riscv.conf" ]
 depends: [ 
 	"ocaml" {= "4.11.1"} 
