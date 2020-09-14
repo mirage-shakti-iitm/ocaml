@@ -33,6 +33,14 @@ include Makefile.config
 include Makefile.common
 endif
 
+
+# For copying cap_tee files to stdlib/
+.PHONY: add-cap-files
+
+add-cap-files:
+	./choose_compartment_strategy.sh $(COMPARTMENT_STRATEGY_CHOICE)
+
+
 .PHONY: defaultentry
 ifeq "$(NATIVE_COMPILER)" "true"
 defaultentry: world.opt
