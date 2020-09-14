@@ -1,0 +1,8 @@
+(*
+camlStdlib__bool__equal:254
+camlStdlib__bool__compare:254
+camlStdlib__bool__to_float:254
+camlStdlib__bool__to_string:254
+camlStdlib__bool_:255
+camlStdlib__bool__fun:254
+*)

@@ -1,0 +1,13 @@
+camlStdlib__nativeint__succ:254
+camlStdlib__nativeint__pred:254
+camlStdlib__nativeint__abs:254
+camlStdlib__nativeint__lognot:254
+camlStdlib__nativeint__fun:254
+camlStdlib__nativeint__to_string:254
+camlStdlib__nativeint__of_string_opt:254
+camlStdlib__nativeint__compare:254
+camlStdlib__nativeint__equal:254
+camlStdlib__nativeint__unsigned_compare:254
+camlStdlib__nativeint__unsigned_div:254
+camlStdlib__nativeint__unsigned_rem:254
+camlStdlib__nativeint_:254
