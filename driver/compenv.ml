@@ -15,6 +15,92 @@
 
 open Clflags
 
+(******************************************************* CAP implementation *******************************************************)
+let cap_hash = Hashtbl.create 1000000
+let file_hash = Hashtbl.create 1000
+
+let is_255_function func_name =
+  List.mem func_name ["caml_apply2"; "caml_program"; "caml_curry2_1"; "caml_apply5"; "caml_apply7"; "caml_apply4"]
+
+let create_cap_entry func_name cap_id =
+  if (Hashtbl.mem cap_hash func_name) then begin 
+        print_endline ("Function entry already exists");
+        ()
+    end
+    else begin
+        let _ = Hashtbl.add cap_hash func_name cap_id in
+        ()
+    end
+
+let get_cap_id func_name_without_id func_name = 
+  (* let c1 = "caml_program" in *)
+  if (Hashtbl.mem cap_hash func_name_without_id) then begin
+      let cap_id = Hashtbl.find cap_hash func_name_without_id in
+        cap_id
+    end
+  else if(is_255_function func_name) then 255
+  else 254
+
+let create_file_entry file_name =
+    if (Hashtbl.mem file_hash file_name) then begin 
+        print_endline ("File already processed");
+        ()
+    end
+    else begin
+        let _ = Hashtbl.add file_hash file_name 1 in
+        ()
+    end
+
+let get_file_status file_name = 
+    if (Hashtbl.mem file_hash file_name) then 1
+    else 0
+
+
+let print_hash_entry func_name cap_id =
+  let _ = print_endline (func_name^":"^(string_of_int cap_id)) in
+    ()
+
+let dump_cap_table () = 
+  let _ = Hashtbl.iter print_hash_entry cap_hash in
+    ()
+
+let dump_file_table () = 
+    let _ = Hashtbl.iter print_hash_entry file_hash in 
+    ()
+
+let process_cap_file name =
+  if (get_file_status name == 1) then ()
+  else
+    begin
+        let cap_filename = (Filename.remove_extension name) ^ "_cap_tee.ml" in
+        if (Sys.file_exists cap_filename == false) then ()
+        else 
+          begin
+            let chan = open_in cap_filename in
+            try
+              while true; do
+                let line = input_line chan in
+                (* let _ = print_endline line in *)
+                (* let fun_cap = Str.split (Str.regexp ":") line in *)
+                let c1 = String.get line 0 in
+                let c2 = '(' in
+                let c3 = '*' in
+                if ((c1 != c2) && (c1 != c3)) then
+                  let fun_cap = String.split_on_char ':' line in
+                  let func_name = List.nth fun_cap 0 in
+                  let cap_id = int_of_string (List.nth fun_cap 1) in
+                  create_cap_entry func_name cap_id;
+                  (* print_int cap_id; *)
+              done;
+            with End_of_file ->
+              close_in chan;
+              ()
+          end
+    end;;
+
+(******************************************************* END OF CAP IMPLEMENTATION *******************************************************)
+
+
 let output_prefix name =
   let oname =
     match !output_name with
@@ -571,11 +657,6 @@ let get_objfiles ~with_ocamlparam =
   else
     List.rev !objfiles
 
-
-
-
-
-
 type deferred_action =
   | ProcessImplementation of string
   | ProcessInterface of string
@@ -591,6 +672,7 @@ let process_action
     (ppf, implementation, interface, ocaml_mod_ext, ocaml_lib_ext) action =
   match action with
   | ProcessImplementation name ->
+      process_cap_file name;
       readenv ppf (Before_compile name);
       let opref = output_prefix name in
       implementation ~source_file:name ~output_prefix:opref;
