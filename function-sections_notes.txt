@@ -1,0 +1,5 @@
+https://github.com/gretay-js/ocaml/commits/function-sections:
+
+1). Look at arm/emit.mlp or arm64/emit.mlp
+https://github.com/gretay-js/ocaml/commit/27a92a94455b8ace604292ea1c5e09fd6a76048e
+https://github.com/gretay-js/ocaml/blob/function-sections/asmcomp/amd64/emit.mlp
