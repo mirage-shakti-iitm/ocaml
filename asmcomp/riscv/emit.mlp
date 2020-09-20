@@ -676,10 +676,10 @@ let begin_assembly() =
   `{emit_symbol lbl_begin}:\n`
 
 let end_assembly() =
-  `	{emit_string code_space}\n`;
   let lbl_end = Compilenv.make_symbol (Some "code_end") in
+  emit_named_text_section lbl_end;
   declare_global_data lbl_end;
-  emit_named_text_section lbl_end;;
+  `{emit_symbol lbl_end}:\n`;
   `	.long	0\n`;
   `	{emit_string data_space}\n`;
   let lbl_end = Compilenv.make_symbol (Some "data_end") in
