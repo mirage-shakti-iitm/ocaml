@@ -274,8 +274,10 @@ let tailrec_entry_point = ref 0
 let emit_named_text_section func_name =
   if !Clflags.function_sections then begin
     `\t.section .text.caml.{emit_symbol func_name},{emit_string_literal "ax"},@progbits\n`;
+    print_endline "First part";
   end
   else
+    print_endline "Second part";
     `\t.section .text\n`
 
 
