@@ -81,8 +81,8 @@ camlCamlinternalFormat__is_valid:8
 camlCamlinternalFormat__format_caml_char:8
 camlCamlinternalFormat__string_of_fmtty:8
 camlCamlinternalFormat__make_printf:8
-camlCamlinternalFormat__k.27:8
-camlCamlinternalFormat__k.27:8
+camlCamlinternalFormat__k:8
+camlCamlinternalFormat__k:8
 camlCamlinternalFormat__make_ignored_param:8
 camlCamlinternalFormat__make_from_fmtty:8
 camlCamlinternalFormat__make_invalid_arg:8
