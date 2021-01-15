@@ -1,3 +1,11 @@
+### Runtime system:
+Backported to 4.11.1 from Working version
+- #9888, #9890: Fixes a bug in the `riscv` backend where register t0 was not
+  saved/restored when performing a GC. This could potentially lead to a
+  segfault.
+  (Nicolás Ojeda Bär, report by Xavier Leroy, review by Xavier Leroy)
+
+
 OCaml 4.11.1 (31 August 2020)
 -----------------------------
 
