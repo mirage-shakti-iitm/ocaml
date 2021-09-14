@@ -70,6 +70,7 @@ OPTCOMPFLAGS=
 ifeq "$(FUNCTION_SECTIONS)" "true"
 OPTCOMPFLAGS += -function-sections
 endif
+OPTCOMPFLAGS += -O3
 # By default, request ocamllex to be quiet
 OCAMLLEX_FLAGS ?= -q
 
