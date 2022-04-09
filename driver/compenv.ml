@@ -39,6 +39,7 @@ let get_cap_id func_name_without_id func_name =
         cap_id
     end
   else if(is_255_function func_name) then 255
+  else if(!Clflags.default_compartment_id != 256) then !Clflags.default_compartment_id
   else 254
 
 let create_file_entry file_name =
@@ -288,6 +289,8 @@ let read_one_param ppf position name v =
   | "afl-instrument" -> set "afl-instrument" [ Clflags.afl_instrument ] v
   | "afl-inst-ratio" ->
       int_setter ppf "afl-inst-ratio" afl_inst_ratio v
+  | "default-compartment-id" ->
+      int_setter ppf "default-compartment-id" default_compartment_id v
   | "annot" -> set "annot" [ Clflags.annotations ] v
   | "absname" -> set "absname" [ Clflags.absname ] v
   | "compat-32" -> set "compat-32" [ bytecode_compatible_32 ] v

@@ -180,6 +180,8 @@ let inlining_report = ref false    (* -inlining-report *)
 let afl_instrument = ref Config.afl_instrument (* -afl-instrument *)
 let afl_inst_ratio = ref 100           (* -afl-inst-ratio *)
 
+let default_compartment_id = ref 256 (* -default-compartment-id *)
+
 let function_sections = ref false      (* -function-sections *)
 
 let simplify_rounds = ref None        (* -rounds *)

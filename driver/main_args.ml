@@ -881,6 +881,12 @@ let mk_afl_inst_ratio f =
   \     (advanced, see afl-fuzz docs for AFL_INST_RATIO)"
 ;;
 
+let mk_default_compartment_id f =
+  "-default-compartment-id", Arg.Int f,
+  "Configure default compartment id assigned to each function\n\
+  \     (advanced, see CUBS documentation)"
+;;
+
 let mk__ f =
   "-", Arg.String f,
   "<file>  Treat <file> as a file name (even if it starts with `-')"
@@ -1104,6 +1110,7 @@ module type Optcomp_options = sig
   val _shared : unit -> unit
   val _afl_instrument : unit -> unit
   val _afl_inst_ratio : int -> unit
+  val _default_compartment_id : int -> unit
   val _function_sections : unit -> unit
 end;;
 
@@ -1314,6 +1321,7 @@ struct
     mk_absname F._absname;
     mk_afl_instrument F._afl_instrument;
     mk_afl_inst_ratio F._afl_inst_ratio;
+    mk_default_compartment_id F._default_compartment_id;
     mk_annot F._annot;
     mk_binannot F._binannot;
     mk_inline_branch_factor F._inline_branch_factor;
@@ -1910,6 +1918,7 @@ module Default = struct
     include Core
     include Compiler
     let _afl_inst_ratio n = afl_inst_ratio := n
+    let _default_compartment_id n = default_compartment_id := n
     let _afl_instrument = set afl_instrument
     let _function_sections () =
       assert Config.function_sections;
