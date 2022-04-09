@@ -233,6 +233,7 @@ module type Optcomp_options = sig
   val _shared : unit -> unit
   val _afl_instrument : unit -> unit
   val _afl_inst_ratio : int -> unit
+  val _default_compartment_id : int -> unit
   val _function_sections : unit -> unit
 end;;
 
