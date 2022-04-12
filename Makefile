@@ -66,7 +66,7 @@ INCLUDES=-I utils -I parsing -I typing -I bytecomp -I file_formats \
         -I asmcomp -I asmcomp/debug \
         -I driver -I toplevel
 
-OPTCOMPFLAGS=-default-compartment-id 1
+OPTCOMPFLAGS=-default-compartment-id 255
 
 COMPFLAGS=-strict-sequence -principal -absname -w +a-4-9-40-41-42-44-45-48-66 \
 	  -warn-error A \
