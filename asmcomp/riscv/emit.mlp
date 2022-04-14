@@ -580,6 +580,31 @@ let emit_instr i =
 let rec emit_all = function
   | {desc = Lend} -> () | i -> emit_instr i; emit_all i.next
 
+
+(* Append to cap file for linker use *)
+let sanitize_cap_filename name ch = 
+  let name_ref = ref "" in
+  for i = 0 to (String.length name - 1) do
+    if (name.[i] == ch) then
+      name_ref := !name_ref ^ (String.make 2 '_')
+    else
+      name_ref := !name_ref ^ (String.make 1 name.[i])
+  done;
+  !name_ref
+
+let write_cap_file func_name = 
+  let function_name_without_id = String.sub func_name 0 (String.rindex func_name '_') in
+  let cap_id = get_cap_id function_name_without_id func_name in
+  let lcfp = Sys.getenv_opt("LINKER_CAP_FILE_PATH") in
+  let name = get_cap_filename () in
+  let name2 = sanitize_cap_filename name '/' in
+  let lcfp2 = (Option.get lcfp) ^ "/" ^ name2 in
+  let chan = open_out_gen [Open_append; Open_creat] 0o666 lcfp2 in
+  let cap_entry = func_name ^ ":" ^ (string_of_int cap_id) ^ "\n" in
+  output_string chan cap_entry;
+  close_out chan
+
+
 (* Emission of a function declaration *)
 
 let fundecl fundecl =
@@ -605,6 +630,10 @@ let fundecl fundecl =
   let cap_id = get_cap_id function_name_without_id fundecl.fun_name in
   let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in
   ` checkcap  {emit_int cap_id}\n`;
+
+  print_endline (get_cap_filename ());
+  if (Option.is_some (Sys.getenv_opt("LINKER_CAP_FILE_PATH"))) then  write_cap_file fundecl.fun_name;
+
   (**************************************************** CAP IMPLEMENTATION ****************************************************)
   
   emit_debug_info fundecl.fun_dbg;

@@ -89,3 +89,5 @@ val create_file_entry: string -> unit
 val get_file_status: string -> int
 
 val dump_file_table: unit -> unit
+
+val get_cap_filename: unit -> string

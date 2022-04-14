@@ -19,6 +19,8 @@ open Clflags
 let cap_hash = Hashtbl.create 1000000
 let file_hash = Hashtbl.create 1000
 
+let linker_cap_filename = ref ""
+
 let is_255_function func_name =
   List.mem func_name ["caml_apply2"; "caml_program"; "caml_curry2_1"; "caml_apply5"; "caml_apply7"; "caml_apply4"]
 
@@ -69,10 +71,17 @@ let dump_file_table () =
     let _ = Hashtbl.iter print_hash_entry file_hash in 
     ()
 
+let get_cap_filename () = 
+  if ((String.length (!linker_cap_filename)) > 0) then
+      !linker_cap_filename
+    else
+      "default_cubs.cap"
+
 let process_cap_file name =
   if (get_file_status name == 1) then ()
   else
     begin
+        linker_cap_filename := (Filename.remove_extension name) ^ ".cap";
         let cap_filename = (Filename.remove_extension name) ^ "_cap_tee.ml" in
         if (Sys.file_exists cap_filename == false) then ()
         else 
