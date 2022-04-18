@@ -75,13 +75,13 @@ let get_cap_filename () =
   if ((String.length (!linker_cap_filename)) > 0) then
       !linker_cap_filename
     else
-      "default_cubs.cap"
+      "default_cubs_cap_tee.ml"
 
 let process_cap_file name =
   if (get_file_status name == 1) then ()
   else
     begin
-        linker_cap_filename := (Filename.remove_extension name) ^ ".cap";
+        linker_cap_filename := (Filename.remove_extension name) ^ "_cap_tee.ml";
         let cap_filename = (Filename.remove_extension name) ^ "_cap_tee.ml" in
         if (Sys.file_exists cap_filename == false) then ()
         else 
