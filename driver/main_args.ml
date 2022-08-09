@@ -882,9 +882,9 @@ let mk_afl_inst_ratio f =
 ;;
 
 let mk_default_compartment_id f =
-  "-default-compartment-id", Arg.Int f,
-  "Configure default compartment id assigned to each function\n\
-  \     (advanced, see CUBS documentation)"
+"-default-compartment-id", Arg.Int f,
+    Printf.sprintf "<n> Configure default compartment id(%d) assigned to each function (advanced, see CUBS documentation)"
+      !Clflags.default_compartment_id
 ;;
 
 let mk__ f =
