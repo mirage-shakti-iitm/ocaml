@@ -36,6 +36,7 @@ let create_cap_entry func_name cap_id =
 
 let get_cap_id func_name_without_id func_name = 
   (* let c1 = "caml_program" in *)
+  print_endline (string_of_int (!Clflags.default_compartment_id));
   if (Hashtbl.mem cap_hash func_name_without_id) then begin
       let cap_id = Hashtbl.find cap_hash func_name_without_id in
         cap_id
