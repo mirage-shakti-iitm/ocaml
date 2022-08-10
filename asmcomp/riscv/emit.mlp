@@ -26,7 +26,10 @@ open Emitaux
 
 open Compenv
 
+let func_id = ref (-1)
+
 (* Layout of the stack.  The stack is kept 16-aligned. *)
+
 
 let stack_offset = ref 0
 
@@ -273,7 +276,7 @@ let tailrec_entry_point = ref 0
 
 let emit_named_text_section func_name =
   if !Clflags.function_sections then begin
-    `\t.section .text.caml.{emit_symbol func_name},{emit_string_literal "ax"},@progbits\n`;
+    `\t.section .text.caml.{emit_symbol func_name}_{emit_int !func_id},{emit_string_literal "ax"},@progbits\n`;
   end
   else
     `\t.section .text\n`
@@ -600,7 +603,7 @@ let write_cap_file func_name =
   let name2 = sanitize_cap_filename name '/' in
   let lcfp2 = (Option.get lcfp) ^ "/" ^ name2 in
   let chan = open_out_gen [Open_append; Open_creat] 0o666 lcfp2 in
-  let cap_entry = func_name ^ ":" ^ (string_of_int cap_id) ^ "\n" in
+  let cap_entry = ".text.caml." ^ func_name ^ "_" ^ (string_of_int !func_id) ^ ":" ^ (string_of_int cap_id) ^ "\n" in
   output_string chan cap_entry;
   close_out chan
 
@@ -608,6 +611,7 @@ let write_cap_file func_name =
 (* Emission of a function declaration *)
 
 let fundecl fundecl =
+  func_id := !func_id + 1;
   function_name := fundecl.fun_name;
   tailrec_entry_point := fundecl.fun_tailrec_entry_point_label;
   stack_offset := 0;

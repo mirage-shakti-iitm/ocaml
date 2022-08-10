@@ -71,11 +71,8 @@ let dump_file_table () =
     let _ = Hashtbl.iter print_hash_entry file_hash in 
     ()
 
-let get_cap_filename () = 
-  if ((String.length (!linker_cap_filename)) > 0) then
-      !linker_cap_filename
-    else
-      "default_cubs_cap_tee.ml"
+let get_cap_filename () = "setu_ocaml.cap"
+
 
 let process_cap_file name =
   if (get_file_status name == 1) then ()
