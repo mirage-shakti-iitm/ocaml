@@ -19,7 +19,7 @@ open Clflags
 let cap_hash = Hashtbl.create 1000000
 let file_hash = Hashtbl.create 1000
 
-let linker_cap_filename = ref ""
+
 
 let is_255_function func_name =
   List.mem func_name ["caml_apply2"; "caml_program"; "caml_curry2_1"; "caml_apply5"; "caml_apply7"; "caml_apply4"]
@@ -79,31 +79,33 @@ let process_cap_file name =
   if (get_file_status name == 1) then ()
   else
     begin
-        linker_cap_filename := (Filename.remove_extension name) ^ "_cap_tee.ml";
-        let cap_filename = (Filename.remove_extension name) ^ "_cap_tee.ml" in
-        if (Sys.file_exists cap_filename == false) then ()
-        else 
-          begin
-            let chan = open_in cap_filename in
-            try
-              while true; do
-                let line = input_line chan in
-                (* let _ = print_endline line in *)
-                (* let fun_cap = Str.split (Str.regexp ":") line in *)
-                let c1 = String.get line 0 in
-                let c2 = '(' in
-                let c3 = '*' in
-                if ((c1 != c2) && (c1 != c3)) then
+        if (Option.is_none !Clflags.setu_cap_path) then ()
+        else
+          let cap_filename = (Option.get !Clflags.setu_cap_path) ^ "/" ^ (Filename.remove_extension (Filename.basename name)) ^ ".cap" in
+          if (Sys.file_exists cap_filename == false) then ()
+          else 
+            begin
+              let chan = open_in cap_filename in
+              try
+                while true; do
+                  let line = input_line chan in
+                  (* let _ = print_endline line in *)
+                  (* let fun_cap = Str.split (Str.regexp ":") line in *)
+                  let c1 = String.get line 0 in
+                  let c2 = ':' in
                   let fun_cap = String.split_on_char ':' line in
-                  let func_name = List.nth fun_cap 0 in
                   let cap_id = int_of_string (List.nth fun_cap 1) in
-                  create_cap_entry func_name cap_id;
-                  (* print_int cap_id; *)
-              done;
-            with End_of_file ->
-              close_in chan;
-              ()
-          end
+                  if ((c1 != c2)) then
+                    let func_name = List.nth fun_cap 0 in
+                    create_cap_entry func_name cap_id;
+                    (* print_int cap_id; *)
+                  else
+                    Clflags.default_compartment_id := cap_id
+                done;
+              with End_of_file ->
+                close_in chan;
+                ()
+            end
     end;;
 
 (******************************************************* END OF CAP IMPLEMENTATION *******************************************************)
@@ -298,6 +300,7 @@ let read_one_param ppf position name v =
       int_setter ppf "afl-inst-ratio" afl_inst_ratio v
   | "default-compartment-id" ->
       int_setter ppf "default-compartment-id" default_compartment_id v
+  | "setu-cap-path" -> setu_cap_path := Some v
   | "annot" -> set "annot" [ Clflags.annotations ] v
   | "absname" -> set "absname" [ Clflags.absname ] v
   | "compat-32" -> set "compat-32" [ bytecode_compatible_32 ] v
