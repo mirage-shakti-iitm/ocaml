@@ -596,8 +596,8 @@ let sanitize_cap_filename name ch =
   !name_ref
 
 let write_cap_file func_name = 
-  let function_name_without_id = String.sub func_name 0 (String.rindex func_name '_') in
-  let cap_id = get_cap_id function_name_without_id func_name in
+  (* let function_name_without_id = String.sub func_name 0 (String.rindex func_name '_') in *)
+  let cap_id = get_cap_id func_name in
   let lcfp = Sys.getenv_opt("LINKER_CAP_FILE_PATH") in
   let name = get_cap_filename () in
   let name2 = sanitize_cap_filename name '/' in
@@ -631,7 +631,7 @@ let fundecl fundecl =
   
   (**************************************************** CAP IMPLEMENTATION ****************************************************)
   let function_name_without_id = String.sub fundecl.fun_name 0 (String.rindex fundecl.fun_name '_') in
-  let cap_id = get_cap_id function_name_without_id fundecl.fun_name in
+  let cap_id = get_cap_id fundecl.fun_name in
   let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in
   ` checkcap  {emit_int cap_id}\n`;
 
