@@ -23,12 +23,12 @@ TARGET_BINDIR ?= $(BINDIR)
 COMPILER=$(ROOTDIR)/ocamlc
 CAMLC=$(CAMLRUN) $(COMPILER)
 COMPFLAGS=-strict-sequence -absname -w +a-4-9-41-42-44-45-48 \
-          -g -warn-error A -bin-annot -nostdlib \
+          -warn-error A -bin-annot -nostdlib \
           -safe-string -strict-formats
 ifeq "$(FLAMBDA)" "true"
-OPTCOMPFLAGS += -O3
+# OPTCOMPFLAGS += -O3
 endif
-OPTCOMPFLAGS += -S
+# OPTCOMPFLAGS += -S
 OPTCOMPILER=$(ROOTDIR)/ocamlopt
 CAMLOPT=$(CAMLRUN) $(OPTCOMPILER)
 CAMLDEP=$(BOOT_OCAMLC) -depend
