@@ -82,6 +82,7 @@ let process_cap_file name =
         if (Option.is_none !Clflags.setu_cap_path) then ()
         else
           let cap_filename = (Option.get !Clflags.setu_cap_path) ^ "/" ^ (Filename.remove_extension (Filename.basename name)) ^ ".cap" in
+          let _ = print_endline cap_filename in
           if (Sys.file_exists cap_filename == false) then ()
           else 
             begin
