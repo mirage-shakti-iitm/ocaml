@@ -70,7 +70,7 @@ OPTCOMPFLAGS=
 ifeq "$(FUNCTION_SECTIONS)" "true"
 OPTCOMPFLAGS += -function-sections
 endif
-OPTCOMPFLAGS += -default-compartment-id 41 -setu-cap-path "/home/sai/Shakti-TEE-Practical/mirage-shakti/setu-cap-files/ocaml"
+OPTCOMPFLAGS += -default-compartment-id 255
 
 # By default, request ocamllex to be quiet
 OCAMLLEX_FLAGS ?= -q
