@@ -891,6 +891,10 @@ let mk_default_compartment_id f =
       !Clflags.default_compartment_id
 ;;
 
+let mk_no_checkcap f =
+  "no-checkcap", Arg.Unit f, "Do not insert checkcap instruction at the start of the function"
+;;
+
 let mk__ f =
   "-", Arg.String f,
   "<file>  Treat <file> as a file name (even if it starts with `-')"
@@ -1116,6 +1120,7 @@ module type Optcomp_options = sig
   val _afl_inst_ratio : int -> unit
   val _default_compartment_id : int -> unit
   val _setu_cap_path : string -> unit
+  val _no_checkcap : unit -> unit
   val _function_sections : unit -> unit
 end;;
 
@@ -1328,6 +1333,7 @@ struct
     mk_afl_inst_ratio F._afl_inst_ratio;
     mk_default_compartment_id F._default_compartment_id;
     mk_setu_cap_path F._setu_cap_path;
+    mk_no_checkcap F._no_checkcap;
     mk_annot F._annot;
     mk_binannot F._binannot;
     mk_inline_branch_factor F._inline_branch_factor;
@@ -1927,6 +1933,7 @@ module Default = struct
     let _default_compartment_id n = default_compartment_id := n
     let _setu_cap_path s = setu_cap_path := (Some s)
     let _afl_instrument = set afl_instrument
+    let _no_checkcap = set no_checkcap
     let _function_sections () =
       assert Config.function_sections;
       first_ccopts := ("-ffunction-sections" :: (!first_ccopts));

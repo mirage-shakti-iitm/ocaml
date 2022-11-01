@@ -210,6 +210,7 @@ val afl_instrument : bool ref
 val afl_inst_ratio : int ref
 val default_compartment_id : int ref
 val setu_cap_path : string option ref
+val no_checkcap : bool ref
 
 val function_sections : bool ref
 

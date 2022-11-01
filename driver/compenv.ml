@@ -301,6 +301,8 @@ let read_one_param ppf position name v =
       int_setter ppf "afl-inst-ratio" afl_inst_ratio v
   | "default-compartment-id" ->
       int_setter ppf "default-compartment-id" default_compartment_id v
+  | "no-checkcap" ->
+       set "no-checkcap" [ Clflags.no_checkcap ] v
   | "setu-cap-path" -> setu_cap_path := Some v
   | "annot" -> set "annot" [ Clflags.annotations ] v
   | "absname" -> set "absname" [ Clflags.absname ] v
