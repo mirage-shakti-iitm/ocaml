@@ -892,7 +892,7 @@ let mk_default_compartment_id f =
 ;;
 
 let mk_no_checkcap f =
-  "no-checkcap", Arg.Unit f, "Do not insert checkcap instruction at the start of the function"
+  "-no-checkcap", Arg.Unit f, "Do not insert checkcap instruction at the start of the function"
 ;;
 
 let mk__ f =
