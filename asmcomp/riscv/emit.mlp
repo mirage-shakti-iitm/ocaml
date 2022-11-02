@@ -632,9 +632,7 @@ let fundecl fundecl =
   (**************************************************** CAP IMPLEMENTATION ****************************************************)
   let function_name_without_id = String.sub fundecl.fun_name 0 (String.rindex fundecl.fun_name '_') in
   let cap_id = get_cap_id fundecl.fun_name in
-  let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in
-  if (not !Clflags.no_checkcap) then
-    ` checkcap  {emit_int cap_id}\n`;
+  let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in ();
 
   print_endline (get_cap_filename ());
   if (Option.is_some (Sys.getenv_opt("LINKER_CAP_FILE_PATH"))) then  write_cap_file fundecl.fun_name;
