@@ -30,6 +30,7 @@
 #include "caml/eventlog.h"
 #include <string.h>
 #include <stdio.h>
+int sai_len = 0;
 
 /* Roots registered from C functions */
 
@@ -112,9 +113,9 @@ static void fill_hashtable(link *frametables) {
     d = (frame_descr *)(tbl + 1);
     for (j = 0; j < len; j++) {
       h = Hash_retaddr(d->retaddr);
-      printf("Hello 1\n");
+      // printf("Hello 1\n");
       while (caml_frame_descriptors[h] != NULL) {
-        printf("Hello 2\n");
+        sai_len++;// printf("Hello 2\n");
         h = (h+1) & caml_frame_descriptors_mask;
       }
       caml_frame_descriptors[h] = d;
