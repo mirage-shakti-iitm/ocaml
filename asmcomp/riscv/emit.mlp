@@ -630,11 +630,11 @@ let fundecl fundecl =
   `{emit_symbol fundecl.fun_name}:\n`;
   
   (**************************************************** CAP IMPLEMENTATION ****************************************************)
-  let function_name_without_id = String.sub fundecl.fun_name 0 (String.rindex fundecl.fun_name '_') in
-  let cap_id = get_cap_id fundecl.fun_name in
-  let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in ();
+  (* let function_name_without_id = String.sub fundecl.fun_name 0 (String.rindex fundecl.fun_name '_') in
+  let cap_id = get_cap_id fundecl.fun_name in 
+  let _ = print_endline (function_name_without_id ^ " : " ^ fundecl.fun_name ^ " : " ^ (string_of_int cap_id)) in (); *)
 
-  print_endline (get_cap_filename ());
+  (* print_endline (get_cap_filename ()); *)
   if (Option.is_some (Sys.getenv_opt("LINKER_CAP_FILE_PATH"))) then  write_cap_file fundecl.fun_name;
 
   (**************************************************** CAP IMPLEMENTATION ****************************************************)
@@ -723,6 +723,7 @@ let end_assembly() =
   `	{emit_string rodata_space}\n`;
   let lbl = Compilenv.make_symbol (Some "frametable") in
   declare_global_data lbl;
+  print_endline ("Frame table => " ^ lbl);
   `{emit_symbol lbl}:\n`;
   emit_frames
     { efa_code_label = (fun l -> `	.quad	{emit_label l}\n`);
