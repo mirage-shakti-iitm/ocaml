@@ -114,14 +114,19 @@ let process_cap_file name =
                   let fun_cap = String.split_on_char ':' line in
                   let cap_id = int_of_string (List.nth fun_cap 1) in
                   if ((c1 != c2)) then
-                    let checkcap_enable = int_of_string (List.nth fun_cap 2) in
-                    let func_name = List.nth fun_cap 0 in
-                    create_cap_entry func_name cap_id;
-                    if (checkcap_enable != 0) then
-                      create_checkcap_entry func_name
+                    begin
+                      let checkcap_enable = int_of_string (List.nth fun_cap 2) in
+                      let func_name = List.nth fun_cap 0 in
+                      create_cap_entry func_name cap_id;
+                      if (checkcap_enable != 0) then 
+                        create_checkcap_entry func_name
+                    end
                     (* print_int cap_id; *)
-                  else
-                    Clflags.default_compartment_id := cap_id
+                  else 
+                    begin
+                      print_endline ("default_compartment_id : " ^ string_of_int (cap_id));
+                      Clflags.default_compartment_id := cap_id
+                    end
                 done;
               with End_of_file ->
                 close_in chan;
