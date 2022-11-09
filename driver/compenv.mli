@@ -82,6 +82,8 @@ val create_cap_entry: string -> int -> unit
 
 val get_cap_id: string -> int
 
+val get_checkcap_entry: string -> int
+
 val dump_cap_table: unit -> unit
 
 val create_file_entry: string -> unit

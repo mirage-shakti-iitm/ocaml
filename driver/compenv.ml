@@ -18,7 +18,7 @@ open Clflags
 (******************************************************* CAP implementation *******************************************************)
 let cap_hash = Hashtbl.create 1000000
 let file_hash = Hashtbl.create 1000
-
+let checkcap_hash = Hashtbl.create 1000000
 
 
 let is_255_function func_name =
@@ -34,9 +34,26 @@ let create_cap_entry func_name cap_id =
         ()
     end
 
+let create_checkcap_entry func_name =
+  if (Hashtbl.mem checkcap_hash func_name) then begin 
+        print_endline ("Function entry already exists");
+        ()
+    end
+    else begin
+        let _ = Hashtbl.add checkcap_hash func_name 1 in
+        ()
+    end
+
+let get_checkcap_entry func_name = 
+  (* let c1 = "caml_program" in *)
+  (* print_endline (string_of_int (!Clflags.default_compartment_id)); *)
+  if (Hashtbl.mem checkcap_hash func_name) then
+      1
+  else 0
+
 let get_cap_id func_name = 
   (* let c1 = "caml_program" in *)
-  print_endline (string_of_int (!Clflags.default_compartment_id));
+  (* print_endline (string_of_int (!Clflags.default_compartment_id)); *)
   if (Hashtbl.mem cap_hash func_name) then begin
       let cap_id = Hashtbl.find cap_hash func_name in
         cap_id
@@ -97,8 +114,11 @@ let process_cap_file name =
                   let fun_cap = String.split_on_char ':' line in
                   let cap_id = int_of_string (List.nth fun_cap 1) in
                   if ((c1 != c2)) then
+                    let checkcap_enable = int_of_string (List.nth fun_cap 2) in
                     let func_name = List.nth fun_cap 0 in
                     create_cap_entry func_name cap_id;
+                    if (checkcap_enable != 0) then
+                      create_checkcap_entry func_name
                     (* print_int cap_id; *)
                   else
                     Clflags.default_compartment_id := cap_id
