@@ -49,7 +49,7 @@ let get_checkcap_entry func_name =
   (* print_endline (string_of_int (!Clflags.default_compartment_id)); *)
   if (Hashtbl.mem checkcap_hash func_name) then
       1
-  else 0
+  else 1
 
 let get_cap_id func_name = 
   (* let c1 = "caml_program" in *)
@@ -115,7 +115,8 @@ let process_cap_file name =
                   let cap_id = int_of_string (List.nth fun_cap 1) in
                   if ((c1 != c2)) then
                     begin
-                      let checkcap_enable = int_of_string (List.nth fun_cap 2) in
+                      (* let checkcap_enable = int_of_string (List.nth fun_cap 2) in *)
+                      let checkcap_enable = 1 in
                       let func_name = List.nth fun_cap 0 in
                       create_cap_entry func_name cap_id;
                       if (checkcap_enable != 0) then 
