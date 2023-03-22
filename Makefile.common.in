@@ -70,7 +70,7 @@ OPTCOMPFLAGS=
 ifeq "$(FUNCTION_SECTIONS)" "true"
 OPTCOMPFLAGS += -function-sections
 endif
-OPTCOMPFLAGS += -default-compartment-id 6 -fides-cap-path "/home/sai/Shakti-TEE-Practical/mirage-shakti/fides-cap-files/fides-voting-system-1/ocaml"
+OPTCOMPFLAGS += -default-compartment-id 4 -fides-cap-path "/home/sai/Shakti-TEE-Practical/mirage-shakti/fides-cap-files/fides-voting-system-1/ocaml"
 
 # By default, request ocamllex to be quiet
 OCAMLLEX_FLAGS ?= -q
