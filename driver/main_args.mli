@@ -234,7 +234,7 @@ module type Optcomp_options = sig
   val _afl_instrument : unit -> unit
   val _afl_inst_ratio : int -> unit
   val _default_compartment_id : int -> unit
-  val _setu_cap_path : string -> unit
+  val _fides_cap_path : string -> unit
   val _function_sections : unit -> unit
 end;;
 

@@ -89,16 +89,16 @@ let dump_file_table () =
     let _ = Hashtbl.iter print_hash_entry file_hash in 
     ()
 
-let get_cap_filename () = "setu_ocaml.cap"
+let get_cap_filename () = "fides_ocaml.cap"
 
 
 let process_cap_file name =
   if (get_file_status name == 1) then ()
   else
     begin
-        if (Option.is_none !Clflags.setu_cap_path) then ()
+        if (Option.is_none !Clflags.fides_cap_path) then ()
         else
-          let cap_filename = (Option.get !Clflags.setu_cap_path) ^ "/" ^ (Filename.remove_extension (Filename.basename name)) ^ ".cap" in
+          let cap_filename = (Option.get !Clflags.fides_cap_path) ^ "/" ^ (Filename.remove_extension (Filename.basename name)) ^ ".cap" in
           let _ = print_endline cap_filename in
           if (Sys.file_exists cap_filename == false) then ()
           else 
@@ -326,7 +326,7 @@ let read_one_param ppf position name v =
       int_setter ppf "afl-inst-ratio" afl_inst_ratio v
   | "default-compartment-id" ->
       int_setter ppf "default-compartment-id" default_compartment_id v
-  | "setu-cap-path" -> setu_cap_path := Some v
+  | "fides-cap-path" -> fides_cap_path := Some v
   | "annot" -> set "annot" [ Clflags.annotations ] v
   | "absname" -> set "absname" [ Clflags.absname ] v
   | "compat-32" -> set "compat-32" [ bytecode_compatible_32 ] v
