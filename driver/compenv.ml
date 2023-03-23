@@ -20,9 +20,18 @@ let cap_hash = Hashtbl.create 1000000
 let file_hash = Hashtbl.create 1000
 let checkcap_hash = Hashtbl.create 1000000
 
+let substring_contains s1 s2 =
+  try
+    let len = String.length s2 in
+    for i = 0 to String.length s1 - len do
+      if String.sub s1 i len = s2 then raise Exit
+    done;
+    false
+  with Exit -> true
 
 let is_255_function func_name =
-  List.mem func_name ["caml_apply2"; "caml_program"; "caml_curry2_1"; "caml_apply5"; "caml_apply7"; "caml_apply4"]
+  let substring_contains_func_name = substring_contains func_name in 
+  List.exists substring_contains_func_name ["caml_apply"; "caml_curry"; "caml_tuplify"; "caml_send"; "caml_program"]
 
 let create_cap_entry func_name cap_id =
   if (Hashtbl.mem cap_hash func_name) then begin 
