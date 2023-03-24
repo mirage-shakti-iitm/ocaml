@@ -90,7 +90,7 @@ let rodata_space =
 (* Names for special regs *)
 
 let reg_tmp = phys_reg 22
-let reg_t2 = phys_reg 16
+let reg_t6 = phys_reg 20
 let reg_domain_state_ptr = phys_reg 23
 let reg_trap = phys_reg 24
 let reg_alloc_ptr = phys_reg 25
@@ -357,7 +357,7 @@ let emit_instr i =
         `	{emit_tail func}\n`
       end
   | Lop(Iextcall{func; alloc = true; label_after = label}) ->
-      `	la	{emit_reg reg_t2}, {emit_symbol func}\n`;
+      `	la	{emit_reg reg_t6}, {emit_symbol func}\n`;
       `	{emit_call "caml_c_call"}\n`;
       record_frame ~label i.live (Dbg_other i.dbg)
   | Lop(Iextcall{func; alloc = false; label_after = _}) ->
