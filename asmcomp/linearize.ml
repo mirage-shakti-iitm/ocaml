@@ -321,8 +321,8 @@ let add_prologue first_insn prologue_required =
   skip_naming_ops first_insn
 
 let fundecl f =
-  let fun_prologue_required = Proc.prologue_required f in
-  let contains_calls = f.Mach.fun_contains_calls in
+  let fun_prologue_required = true in
+  let contains_calls = true in
   let fun_tailrec_entry_point_label, fun_body =
     add_prologue (linear f.Mach.fun_body end_instr contains_calls)
       fun_prologue_required
