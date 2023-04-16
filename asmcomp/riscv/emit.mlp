@@ -62,7 +62,6 @@ let emit_jump op s =
   else `{emit_string op}	{emit_symbol s}`
 
 let emit_call = emit_jump "call"
-let emit_tail = emit_jump "tail"
 
 (* Output a label *)
 
@@ -266,6 +265,8 @@ let function_name = ref ""
 (* Entry point for tail recursive calls *)
 let tailrec_entry_point = ref 0
 
+(* let int_of_bool b = if b then 1 else 0 *)
+
 (* Output the assembly code for an instruction *)
 
 let emit_instr i =
@@ -312,24 +313,32 @@ let emit_instr i =
   | Lop(Iconst_symbol s) ->
       `	la	{emit_reg i.res.(0)}, {emit_symbol s}\n`
   | Lop(Icall_ind {label_after = label}) ->
+      print_int label;
+      print_endline "-call";
       `	jalr	{emit_reg i.arg.(0)}\n`;
       record_frame ~label i.live (Dbg_other i.dbg)
   | Lop(Icall_imm {func; label_after = label}) ->
       `	{emit_call func}\n`;
       record_frame ~label i.live (Dbg_other i.dbg)
-  | Lop(Itailcall_ind {label_after = _}) ->
+  | Lop(Itailcall_ind {label_after = label}) ->
+      print_int label;
+      print_endline "-tail";
       let n = frame_size() in
-      if !contains_calls then reload_ra n;
+      ` jalr  {emit_reg i.arg.(0)}\n`;
+      record_frame ~label i.live (Dbg_other i.dbg);
+      reload_ra n;
       emit_stack_adjustment n;
-      `	jr	{emit_reg i.arg.(0)}\n`
-  | Lop(Itailcall_imm {func; label_after = _}) ->
+      ` ret\n`
+  | Lop(Itailcall_imm {func; label_after = label}) ->
       if func = !function_name then begin
         `	j	{emit_label !tailrec_entry_point}\n`
       end else begin
         let n = frame_size() in
-        if !contains_calls then reload_ra n;
+        ` {emit_call func}\n`;
+        record_frame ~label i.live (Dbg_other i.dbg);
+        reload_ra n;
         emit_stack_adjustment n;
-        `	{emit_tail func}\n`
+        ` ret\n`
       end
   | Lop(Iextcall{func; alloc = true; label_after = label}) ->
       `	la	{emit_reg reg_t2}, {emit_symbol func}\n`;
