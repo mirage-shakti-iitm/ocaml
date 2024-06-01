@@ -881,8 +881,8 @@ let mk_afl_inst_ratio f =
   \     (advanced, see afl-fuzz docs for AFL_INST_RATIO)"
 ;;
 
-let mk_setu_cap_path f =
-  "-setu-cap-path", Arg.String f, "<path>  Use <pathcommand> as the path to find .cap files"
+let mk_fides_cap_path f =
+  "-fides-cap-path", Arg.String f, "<path>  Use <pathcommand> as the path to find .cap files"
 ;;
 
 let mk_default_compartment_id f =
@@ -1115,7 +1115,7 @@ module type Optcomp_options = sig
   val _afl_instrument : unit -> unit
   val _afl_inst_ratio : int -> unit
   val _default_compartment_id : int -> unit
-  val _setu_cap_path : string -> unit
+  val _fides_cap_path : string -> unit
   val _function_sections : unit -> unit
 end;;
 
@@ -1327,7 +1327,7 @@ struct
     mk_afl_instrument F._afl_instrument;
     mk_afl_inst_ratio F._afl_inst_ratio;
     mk_default_compartment_id F._default_compartment_id;
-    mk_setu_cap_path F._setu_cap_path;
+    mk_fides_cap_path F._fides_cap_path;
     mk_annot F._annot;
     mk_binannot F._binannot;
     mk_inline_branch_factor F._inline_branch_factor;
@@ -1925,7 +1925,7 @@ module Default = struct
     include Compiler
     let _afl_inst_ratio n = afl_inst_ratio := n
     let _default_compartment_id n = default_compartment_id := n
-    let _setu_cap_path s = setu_cap_path := (Some s)
+    let _fides_cap_path s = fides_cap_path := (Some s)
     let _afl_instrument = set afl_instrument
     let _function_sections () =
       assert Config.function_sections;

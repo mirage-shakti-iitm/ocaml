@@ -181,7 +181,7 @@ let afl_instrument = ref Config.afl_instrument (* -afl-instrument *)
 let afl_inst_ratio = ref 100           (* -afl-inst-ratio *)
 
 let default_compartment_id = ref 256 (* -default-compartment-id *)
-let setu_cap_path = ref (None: string option) (* -setu-cap-path *)
+let fides_cap_path = ref (None: string option) (* -fides-cap-path *)
 
 let function_sections = ref false      (* -function-sections *)
 
