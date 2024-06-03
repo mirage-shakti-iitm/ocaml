@@ -649,8 +649,9 @@ let fundecl fundecl =
   emit_named_text_section fundecl.fun_name;
   `	.align	2\n`;
   `{emit_symbol fundecl.fun_name}:\n`;
-  if (get_checkcap_entry fundecl.fun_name != 0) then
+  if ((get_checkcap_entry fundecl.fun_name != 0) || (!Clflags.insert_all_checkcap)) then
   ` checkcap  {emit_int cap_id}\n`;
+
 
   comp_id := -1;
   

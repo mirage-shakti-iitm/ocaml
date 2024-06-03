@@ -182,6 +182,7 @@ let afl_inst_ratio = ref 100           (* -afl-inst-ratio *)
 
 let default_compartment_id = ref 256 (* -default-compartment-id *)
 let fides_cap_path = ref (None: string option) (* -fides-cap-path *)
+let insert_all_checkcap = ref false (* -insert-all-checkcap *)
 
 let function_sections = ref false      (* -function-sections *)
 
