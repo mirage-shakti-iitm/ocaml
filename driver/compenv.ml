@@ -58,7 +58,7 @@ let get_cap_id func_name =
       let cap_id = Hashtbl.find cap_hash func_name in
         cap_id
     end
-  else if(is_255_function func_name) then 255
+  else if(is_255_function func_name) then 254
   else if(!Clflags.default_compartment_id != 256) then !Clflags.default_compartment_id
   else 254
 
