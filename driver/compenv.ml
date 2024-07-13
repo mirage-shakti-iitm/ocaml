@@ -20,6 +20,7 @@ let cap_hash = Hashtbl.create 1000000
 let file_hash = Hashtbl.create 1000
 let checkcap_hash = Hashtbl.create 1000000
 
+let ss_check = ref 1
 
 let is_255_function func_name =
   List.mem func_name ["caml_apply2"; "caml_program"; "caml_curry2_1"; "caml_apply5"; "caml_apply7"; "caml_apply4"]
@@ -713,11 +714,14 @@ let process_action
   match action with
   | ProcessImplementation name ->
       process_cap_file name;
+      print_endline ("processing ml file: " ^ string_of_int (!ss_check));
+      ss_check := 3;
       readenv ppf (Before_compile name);
       let opref = output_prefix name in
       implementation ~source_file:name ~output_prefix:opref;
       objfiles := (opref ^ ocaml_mod_ext) :: !objfiles
   | ProcessInterface name ->
+      print_endline ("processing mli file: " ^ string_of_int (!ss_check));
       readenv ppf (Before_compile name);
       let opref = output_prefix name in
       interface ~source_file:name ~output_prefix:opref;
