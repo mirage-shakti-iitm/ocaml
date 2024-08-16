@@ -328,7 +328,7 @@ let read_one_param ppf position name v =
   | "default-compartment-id" ->
       int_setter ppf "default-compartment-id" default_compartment_id v
   | "fides-cap-path" -> fides_cap_path := Some v
-  | "insert-all-checkcap" -> set "insert-all-checkcap" [ insert_all_checkcap ] v
+  | "insert-all-checkcap" -> set "insert-all-checkcap" [ Clflags.insert_all_checkcap ] v
   | "annot" -> set "annot" [ Clflags.annotations ] v
   | "absname" -> set "absname" [ Clflags.absname ] v
   | "compat-32" -> set "compat-32" [ bytecode_compatible_32 ] v
