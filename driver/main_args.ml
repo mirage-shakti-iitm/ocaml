@@ -106,6 +106,11 @@ let mk_function_sections f =
     "-function-sections", Arg.Unit err, " (option not available)"
 ;;
 
+let mk_disable_non_recursive_tco f =
+  "-disable-non-recursive-tco", Arg.Unit f, "Disable non-recursive tailcall otpimization"
+;;
+
+
 let mk_stop_after ~native f =
   "-stop-after",
   Arg.Symbol (Clflags.Compiler_pass.available_pass_names ~native, f),
@@ -1117,6 +1122,7 @@ module type Optcomp_options = sig
   val _default_compartment_id : int -> unit
   val _setu_cap_path : string -> unit
   val _function_sections : unit -> unit
+  val _disable_non_recursive_tco : unit -> unit
 end;;
 
 module type Opttop_options = sig
@@ -1346,6 +1352,7 @@ struct
     mk_for_pack_opt F._for_pack;
     mk_g_opt F._g;
     mk_function_sections F._function_sections;
+    mk_disable_non_recursive_tco F._disable_non_recursive_tco;
     mk_stop_after ~native:true F._stop_after;
     mk_i F._i;
     mk_I F._I;
@@ -1931,6 +1938,7 @@ module Default = struct
       assert Config.function_sections;
       first_ccopts := ("-ffunction-sections" :: (!first_ccopts));
       function_sections := true
+    let _disable_non_recursive_tco = set disable_non_recursive_tco
     let _nodynlink = clear dlcode
     let _output_complete_obj () =
       set output_c_object (); set output_complete_object ()

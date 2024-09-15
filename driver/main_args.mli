@@ -236,6 +236,7 @@ module type Optcomp_options = sig
   val _default_compartment_id : int -> unit
   val _setu_cap_path : string -> unit
   val _function_sections : unit -> unit
+  val _disable_non_recursive_tco : unit -> unit
 end;;
 
 module type Opttop_options = sig

@@ -367,6 +367,9 @@ let read_one_param ppf position name v =
 
   | "function-sections" ->
     set "function-sections" [ Clflags.function_sections ] v
+  | "disable-non-recursive-tco" -> 
+    set "disable-non-recursive-tco" [ Clflags.disable_non_recursive_tco ] v
+  
   (* assembly sources *)
   |  "s" ->
     set "s" [ Clflags.keep_asm_file ; Clflags.keep_startup_file ] v

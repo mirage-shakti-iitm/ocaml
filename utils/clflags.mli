@@ -212,6 +212,7 @@ val default_compartment_id : int ref
 val setu_cap_path : string option ref
 
 val function_sections : bool ref
+val disable_non_recursive_tco : bool ref
 
 val all_passes : string list ref
 val dumped_pass : string -> bool

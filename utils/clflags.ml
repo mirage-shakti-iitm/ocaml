@@ -185,6 +185,8 @@ let setu_cap_path = ref (None: string option) (* -setu-cap-path *)
 
 let function_sections = ref false      (* -function-sections *)
 
+let disable_non_recursive_tco = ref false (* -disable-non-recursive-tco *)
+
 let simplify_rounds = ref None        (* -rounds *)
 let default_simplify_rounds = ref 1        (* -rounds *)
 let rounds () =
