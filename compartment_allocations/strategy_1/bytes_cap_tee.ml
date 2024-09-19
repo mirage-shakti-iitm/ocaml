@@ -6,7 +6,7 @@ camlStdlib__bytes__to_string:254
 camlStdlib__bytes__of_string:254
 camlStdlib__bytes__sub:254
 camlStdlib__bytes__sub_string:254
-camlStdlib__bytes__.2b.2b:254
+camlStdlib__bytes__++:254
 camlStdlib__bytes__extend:254
 camlStdlib__bytes__fill:254
 camlStdlib__bytes__blit:254
